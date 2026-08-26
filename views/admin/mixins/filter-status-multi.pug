@@ -1,0 +1,12 @@
+mixin fiter-status-multi()
+  form.d-flex.align-items-statrt.gap-2(action=`${prefixAdmin}/product/change-multi/resource?_method=PATCH` method='POST', form-change-multi)
+    .form-group
+      select.form-select.form-select-sm(name='type', class="form-control")
+        option(value="" disabled selected) -- Chọn thao tác --
+        option(value='active') Hoạt động
+        option(value='inactive') Dừng hoạt động
+        option(value='deleted-all') Xóa tất cả
+        option(value='change-position') Thay đổi vị trí
+    .form-group.d-none
+      input(type="text", name="ids", class="form-control")
+    button.btn.btn-primary.btn-sm.px-3.fw-medium(type='submit') Áp dụng

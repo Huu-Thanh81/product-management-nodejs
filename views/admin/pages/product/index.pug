@@ -1,0 +1,84 @@
+extends ../../layouts/default.pug
+include ../../mixins/filter-status.pug
+include ../../mixins/search.pug
+include ../../mixins/pagination.pug
+include ../../mixins/filter-status-multi.pug
+include ../../mixins/alert.pug
+block main-content
+  +alert("3000")
+  //- Tiêu đề trang 
+  .d-flex.justify-content-between.align-items-center.mb-4
+    h3.fw-bold.text-dark.m-0 Danh sách sản phẩm
+    a.fa-solid.fa-plus(href=`${prefixAdmin}/product/create`)
+      button.btn.btn-primary.shadow-sm Thêm sản phẩm
+  //- CARD 1: BỘ LỌC VÀ TÌM KIẾM
+  .card.border-0.shadow-sm.rounded-3.mb-4
+    .card-header.bg-white.border-bottom.py-3
+      h6.card-title.m-0.fw-bold.text-secondary
+        i.fa-solid.fa-filter.me-2.text-primary
+        | Bộ lọc và tìm kiếm
+    .card-body
+      .row.g-3.align-items-center
+        // Bộ nút lọc trạng thái
+        .col-lg-6.col-md-12
+          .btn-group.w-100.w-md-auto(role='group')
+            +filter-status(filterStatus)
+        //-  Ô tìm kiếm
+        .col-lg-6.col-md-12    
+          +search(keyword)
+  //- CARD 2: BẢNG DANH SÁCH SẢN PHẨM
+  .card.border-0.shadow-sm.rounded-3
+    .card-header.bg-white.border-bottom.py-3.d-flex.align-items-statrt.justify-content-between
+      h6.card-title.m-0.fw-bold.text-secondary Danh sách
+      +fiter-status-multi()
+    .card-body.p-0
+      .table-responsive
+        table.table.table-hover.align-middle.mb-0(checkBox-multi)
+          thead.table-light
+            tr
+              th.text-center(scope='col' style='width: 20px;')
+                input#check-all.form-check-input(type='checkbox', name="checkAll")
+              th.text-center(scope='col' style='width: 100px;') STT
+              th(scope='col' style='width: 100px;') Hình ảnh
+              th(scope='col') Tiêu đề
+              th(scope='col') Giá
+              th(scope='col') Vị trí
+              th(scope='col') Trạng thái
+              th.text-center(scope='col' style='width: 180px;') Hành động
+          tbody
+            // Sản phẩm 1
+            each product, index  in products
+              tr
+                td.text-center
+                  input.form-check-input.check-item(type='checkbox' name="id", value=product.id)
+                td.text-center.fw-semibold.text-muted #{index + 1}
+                td
+                  img.product-thumbnail(src=product.thumbnail alt=product.title)
+                td
+                  span.fw-semibold.text-dark.d-block #{product.title}
+                td
+                  span.fw-bold.text-success #{product.price}$
+                td
+                 input(type = "number", value=product.position, style= "width: 60px", min="1", name="position")
+                td
+                  if(product.status === 'active')
+                    button.badge.bg-success-subtle.text-success.border.border-success-subtle.rounded-pill(class='px-2.5 py-1.5', data-status = product.status, data-id=product.id, button-change-status) Hoạt động
+                  else
+                    button.badge.bg-danger-subtle.text-danger.border.border-danger-subtle.rounded-pill(class='px-2.5 py-1.5', data-status =  product.status, data-id=product.id, button-change-status) Ngừng hoạt động
+                td.text-center
+                  a(href=`${prefixAdmin}/product/detail/${product.id}`)
+                    button.btn.btn-sm.btn-outline-success.me-1(title='xem chi tiết', button-detail) chi tiết
+                  a(href=`${prefixAdmin}/product/edit/${product.id}`)
+                    button.btn.btn-sm.btn-outline-warning.me-1(title='Sửa', button-update) Sửa
+                  button.btn.btn-sm.btn-outline-danger(title='Xóa', button-delete, data-id=product.id )
+                    i.fa-solid.fa-trash
+                    |  Xóa
+ 
+  ul.pagination.justify-content-center.mt-2
+    +pagination(pagination)
+  form(action = "", method="POST", id="form-change-status", data-path=prefixAdmin +`/product/change-status`)
+  form(action = "", method="POST", id="form-delete-item", data-path=prefixAdmin +`/product/deleted/`)
+  script(src="/admin/js/product.js") 
+ 
+      
+

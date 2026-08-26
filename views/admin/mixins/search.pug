@@ -1,0 +1,5 @@
+mixin search(keyword)
+  form#form-search
+    .input-group
+      input.form-control(type='text' name='keyword', value=`${keyword}` ,placeholder='Nhập từ khóa tìm kiếm...')
+      button.btn.btn-success.px-4(type='submit') Tìm kiếm

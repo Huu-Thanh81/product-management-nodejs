@@ -1,0 +1,51 @@
+extends ../../layouts/default.pug
+include ../../mixins/alert.pug
+block main-content
+  +alert("3000")
+  .card-body.p-4
+    h2.card-title.fw-bold.text-dark.mb-4 Th&ecirc;m m&#x1EDB;i s&#x1EA3;n ph&#x1EA9;m
+    form(action=`${prefixAdmin}/product/create` method='POST', id="form-create-product" enctype="multipart/form-data")
+      // Tiêu đề
+      .mb-3
+        label.form-label.fw-medium(for='title') Ti&ecirc;u &dstrok;&#x1EC1;
+        input#title.form-control(type='text' placeholder='Nhập tiêu đề sản phẩm' name="title")
+      // Mô tả
+      .mb-3
+        label.form-label.fw-medium(for='description') M&ocirc; t&#x1EA3;
+        textarea#description.form-control(rows='4' placeholder='Nhập mô tả sản phẩm...' name="description")
+      // Giá, % Giảm giá, Số lượng
+      .row.g-3.mb-3
+        .col-md-4
+          label.form-label.fw-medium(for='price') Gi&aacute;
+          input#price.form-control(type='number' value='0' min='0' name="price")
+        .col-md-4
+          label.form-label.fw-medium(for='discount') % Gi&#x1EA3;m gi&aacute;
+          input#discount.form-control(type='number' value='0' min='0' max='100' name="discountPercentage")
+        .col-md-4
+          label.form-label.fw-medium(for='quantity') S&#x1ED1; l&#x1B0;&#x1EE3;ng
+          input#quantity.form-control(type='number' value='0' min='0', name="stock")
+      // Ảnh
+      .mb-3
+        label.form-label.fw-medium(for='image') &#x1EA2;nh
+        input#image.form-control( type="file" name="thumbnail", accept = "image/*")
+        // Khung xem trước ảnh
+        #imagePreviewContainer.mt-3.d-none.position-relative.d-inline-block
+          img#imagePreview.img-thumbnail.rounded( style='max-height: 200px; object-fit: cover;')
+          button#btnRemoveImage.btn.btn-danger.btn-sm.position-absolute.top-0.end-0.m-1.rounded-circle(type='button' style='width: 28px; height: 28px; padding: 0; line-height: 1;' title='xóa ảnh') x
+      // Vị trí
+      .mb-4
+        label.form-label.fw-medium(for='position') V&#x1ECB; tr&iacute;
+        input#position.form-control(type='number' placeholder='Tự động tăng', name="position", min = "1")
+      // Trạng thái
+      .mb-4
+        label.form-label.fw-medium.d-block Tr&#x1EA1;ng th&aacute;i
+        .form-check.form-check-inline
+          input#statusActive.form-check-input(type='radio' name='status' value='active' checked='')
+          label.form-check-label(for='statusActive') Ho&#x1EA1;t &dstrok;&#x1ED9;ng
+        .form-check.form-check-inline
+          input#statusInactive.form-check-input(type='radio' name='status' value='inactive')
+          label.form-check-label(for='statusInactive') D&#x1EEB;ng ho&#x1EA1;t &dstrok;&#x1ED9;ng
+      // Nút hành động
+      .pt-2
+        button.btn.btn-primary.px-4.py-2(type='submit') T&#x1EA1;o m&#x1EDB;i
+  script(src="/admin/js/product.js") 

@@ -1,0 +1,3 @@
+mixin filter-status(filterStatus)
+  each filter in filterStatus
+    button(class=`${filter.class} ${filter.active ? 'active' : ''}`,type='button', button-status = filter.status) #{filter.name}

@@ -1,6 +1,4 @@
-doctype html
-html
-  head
-    title= trang chủ
-  body
-    h1= trang chủ
+extends ../../layouts/default.pug
+include ../../mixins/box-head.pug
+block main
+  +box-head("Trang chủ")
