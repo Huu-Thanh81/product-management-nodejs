@@ -18,7 +18,10 @@ app.use(bodyParser.urlencoded()); // cho truyền req.body
 app.use(methodOverride("_method"));
 app.use(express.static("public"));
 // app.use("URL", express.static("THƯ_MỤC_THẬT"));
-app.use("/bootstrap", express.static("node_modules/bootstrap/dist"));
+app.use(
+  "/bootstrap",
+  express.static(`${__dirname}/node_modules/bootstrap/dist`),
+);
 const port = process.env.PORT;
 app.set("views", `${__dirname}/views`);
 app.set("view engine", "pug");
