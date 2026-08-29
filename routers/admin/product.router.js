@@ -1,10 +1,12 @@
 const express = require("express");
 const router = express.Router();
 const productController = require("../../controllers/admin/product.controller");
-const multer = require("multer");
-const storage = require("../../helper/storgeMulter");
-const upload = multer({ storage: storage() });
+// const storage = require("../../helper/storgeMulter");
+// const upload = multer({ storage: storage() });
 const validePost = require("../../validates/product.validate");
+const uploadCloud = require("../../middlewares/admin/uploadCloud.middleware");
+const multer = require("multer");
+const upload = multer();
 router.get("/", productController.index);
 router.patch(
   "/change-status/:status/:id/resource",
@@ -17,12 +19,14 @@ router.get("/edit/:id", productController.edit);
 router.patch(
   "/edit/:id/resource",
   upload.single("thumbnail"),
+  uploadCloud.upload,
   validePost,
   productController.editProduct,
 );
 router.post(
   "/create",
   upload.single("thumbnail"),
+  uploadCloud.upload,
   validePost,
   productController.post,
 );

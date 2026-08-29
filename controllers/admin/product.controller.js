@@ -108,11 +108,6 @@ module.exports.post = async (req, res) => {
   } else {
     req.body.position = parseInt(req.body.position);
   }
-  if (req.file) {
-    req.body.thumbnail = `/uploads/${req.file.filename}`;
-  } else {
-    req.body.thumbnail = "";
-  }
   const product = new Product(req.body);
   await product.save();
   res.redirect(`${prefixAdmin.prefixAdmin}/product`);
@@ -138,9 +133,6 @@ module.exports.editProduct = async (req, res) => {
   req.body.position = parseInt(req.body.position);
   req.body.position = parseInt(req.body.position);
   req.body.position = parseInt(req.body.position);
-  if (req.body.thumbnail) {
-    req.body.thumbnail = `/uploads/${req.file.filename}`;
-  }
   await Product.updateOne({ _id: id }, req.body);
   res.redirect(`${prefixAdmin.prefixAdmin}/product`);
 };

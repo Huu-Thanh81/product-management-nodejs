@@ -28,6 +28,11 @@ app.set("view engine", "pug");
 app.use(express.static(`${__dirname}/public`));
 app.locals.prefixAdmin = systemConfig.prefixAdmin; //chỉ dùng được trong các file Pug/EJS
 
+app.use((error, req, res, next) => {
+  console.log("Lỗi:", error);
+
+  res.status(500).send("Có lỗi xảy ra");
+});
 clientRouter(app);
 dashbordRouter(app);
 
