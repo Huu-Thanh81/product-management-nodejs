@@ -4,6 +4,7 @@ include ../../mixins/search.pug
 include ../../mixins/pagination.pug
 include ../../mixins/filter-status-multi.pug
 include ../../mixins/alert.pug
+include ../../mixins/sort.pug
 block main-content
   +alert("3000")
   //- Tiêu đề trang 
@@ -11,7 +12,7 @@ block main-content
     h3.fw-bold.text-dark.m-0 Danh sách sản phẩm
     a.fa-solid.fa-plus(href=`${prefixAdmin}/product/create`)
       button.btn.btn-primary.shadow-sm Thêm sản phẩm
-  //- CARD 1: BỘ LỌC VÀ TÌM KIẾM
+  //- CARD 2: BỘ LỌC VÀ TÌM KIẾM
   .card.border-0.shadow-sm.rounded-3.mb-4
     .card-header.bg-white.border-bottom.py-3
       h6.card-title.m-0.fw-bold.text-secondary
@@ -28,9 +29,10 @@ block main-content
           +search(keyword)
   //- CARD 2: BẢNG DANH SÁCH SẢN PHẨM
   .card.border-0.shadow-sm.rounded-3
-    .card-header.bg-white.border-bottom.py-3.d-flex.align-items-statrt.justify-content-between
+    .card-header.bg-white.border-bottom.py-3.d-flex.align-items-center.justify-content-between
       h6.card-title.m-0.fw-bold.text-secondary Danh sách
       +fiter-status-multi()
+      +sort()
     .card-body.p-0
       .table-responsive
         table.table.table-hover.align-middle.mb-0(checkBox-multi)

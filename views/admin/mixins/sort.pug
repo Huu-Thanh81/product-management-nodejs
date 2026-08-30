@@ -1,0 +1,12 @@
+mixin sort()
+  .mb-3.d-flex.gap-2(sort)
+    select.form-select.form-select-md.shadow-none.border-light-subtle.rounded-2(name="sort", sort-select)
+      option(value='position-desc') Vị trí giảm dần
+      option(value='position-asc') Vị trí tăng dần
+      option(value='price-desc') Giá giảm dần
+      option(value='price-asc') Giá tăng dần
+      option(value='title-asc') Tiêu đề từ A - Z
+      option(value='tile-desc') Tiêu đề Z - A
+    button.btn.btn-sm.btn-danger.rounded-2.px-3(type='button' sort-clear)
+      i.bi.bi-x-circle
+      |  Clear

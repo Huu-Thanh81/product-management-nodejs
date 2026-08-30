@@ -27,10 +27,15 @@ module.exports.index = async (req, res) => {
     req.query,
     totalPage,
   );
+  const sort = {};
+  if (req.query.sortKey && req.query.sortValue) {
+    sort[req.query.sortKey] = req.query.sortValue;
+  }
   const products = await Product.find(findQuery)
-    .sort({ position: "desc" })
+    .sort(sort)
     .limit(pagination.limitPage)
     .skip(pagination.skip);
+
   res.render("admin/pages/product/index.pug", {
     titlePage: "Trang sản phẩm",
     products: products,

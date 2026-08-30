@@ -60,7 +60,10 @@ if (formChangeMulti) {
       const isComfirm = confirm(
         "Bạn có chắc chắn xóa những sản phầm này không",
       );
-      if (!isComfirm) return;
+      if (!isComfirm) {
+        e.preventDefault(); //Ngăn form gửi đi nhưng JS vẫn chạy tiếp.
+        return; //Dừng hàm nhưng không tự động ngăn form submit.
+      }
     }
     if (inputCheck.length > 0) {
       let ids = [];
@@ -78,6 +81,7 @@ if (formChangeMulti) {
       });
       inputids.value = ids.join(", ");
     } else {
+      e.preventDefault();
       alert("vui lòng chọn ít nhất một bản ghi");
     }
   });
@@ -153,3 +157,36 @@ if (btnRemoveImage) {
   });
 }
 //end Review
+//sort-select
+const sort = document.querySelector("[sort-select]");
+if (sort) {
+  const urlParams = new URLSearchParams(window.location.search);
+  const sortKey = urlParams.get("sortKey");
+  const sortValue = urlParams.get("sortValue");
+
+  if (sortKey && sortValue) {
+    const selectString = `${sortKey}-${sortValue}`;
+
+    const selectOption = sort.querySelector(`option[value="${selectString}"]`);
+
+    if (selectOption) {
+      selectOption.selected = true;
+    }
+  }
+  sort.addEventListener("change", (e) => {
+    const [sortKey, sortValue] = e.target.value.split("-");
+    urlParams.set("sortKey", sortKey);
+    urlParams.set("sortValue", sortValue);
+    window.location.search = urlParams.toString();
+  });
+
+  const btnClear = document.querySelector("[sort-clear]");
+  if (btnClear) {
+    btnClear.addEventListener("click", () => {
+      urlParams.delete("sortKey");
+      urlParams.delete("sortValue");
+      window.location.search = urlParams.toString();
+    });
+  }
+}
+//end sort-select
